@@ -2,7 +2,7 @@
 
 import jwt
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from .config import config
@@ -34,7 +34,7 @@ def verify_jwt_token(token: str) -> dict:
         # Check expiration if present
         if "exp" in payload:
             exp_timestamp = payload["exp"]
-            if datetime.utcnow().timestamp() > exp_timestamp:
+            if datetime.now(timezone.utc).timestamp() > exp_timestamp:
                 logger.warning("JWT token expired")
                 raise HTTPException(
                     status_code=401,

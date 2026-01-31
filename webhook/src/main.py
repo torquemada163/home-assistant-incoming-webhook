@@ -11,7 +11,7 @@ from .ha_integration import ha_client
 
 # Configure logging
 logging.basicConfig(
-    level=getattr(logging, config.log_level),
+    level=getattr(logging, config.log_level.upper()),
     format='[%(asctime)s] %(levelname)s: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )

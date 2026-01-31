@@ -2,7 +2,7 @@
 
 import pytest
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException
 from webhook.src.auth import verify_jwt_token
 
@@ -13,7 +13,7 @@ def test_valid_jwt_token():
     
     payload = {
         "iss": "test-service",
-        "exp": datetime.utcnow() + timedelta(hours=1)
+        "exp": datetime.now(timezone.utc) + timedelta(hours=1)
     }
     
     token = jwt.encode(payload, secret, algorithm="HS256")
@@ -34,7 +34,7 @@ def test_expired_jwt_token():
     
     payload = {
         "iss": "test-service",
-        "exp": datetime.utcnow() - timedelta(hours=1)  # Expired 1 hour ago
+        "exp": datetime.now(timezone.utc) - timedelta(hours=1)  # Expired 1 hour ago
     }
     
     token = jwt.encode(payload, secret, algorithm="HS256")
@@ -57,7 +57,7 @@ def test_invalid_signature():
     
     payload = {
         "iss": "test-service",
-        "exp": datetime.utcnow() + timedelta(hours=1)
+        "exp": datetime.now(timezone.utc) + timedelta(hours=1)
     }
     
     # Create token with one secret

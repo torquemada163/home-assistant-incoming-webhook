@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 from webhook.src.main import app
 from webhook.src.config import config
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 @pytest.fixture
@@ -19,7 +19,7 @@ def valid_token():
     """Generate valid JWT token for testing"""
     payload = {
         "iss": "test-client",
-        "exp": datetime.utcnow() + timedelta(hours=1)
+        "exp": datetime.now(timezone.utc) + timedelta(hours=1)
     }
     return jwt.encode(payload, config.jwt_secret, algorithm="HS256")
 
