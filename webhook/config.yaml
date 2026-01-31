@@ -1,0 +1,34 @@
+name: "Incoming Webhook"
+description: "Secure webhook API for controlling virtual switches from external systems"
+version: "1.0.0"
+slug: "incoming_webhook"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+startup: application
+boot: auto
+ports:
+  8099/tcp: null
+ports_description:
+  8099/tcp: "Webhook API port (internal)"
+options:
+  jwt_secret: "CHANGE-ME-TO-RANDOM-SECRET-KEY-AT-LEAST-32-CHARS"
+  port: 8099
+  log_level: "info"
+  switches:
+    - id: "example_switch"
+      name: "Example Switch"
+      icon: "mdi:light-switch"
+schema:
+  jwt_secret: str
+  port: int
+  log_level: list(debug|info|warning|error)
+  switches:
+    - id: str
+      name: str
+      icon: str
+homeassistant_api: true
