@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Logs
+*.log
+logs/
+
+# Local configuration
+config.local.yaml
+*.local.*
+
+# Home Assistant
+secrets.yaml
+
+# TEMP
+.agent/
+docs/
+CHANGELOG.md
+CONCEPT.md
+fix_python_version.sh
+generate_token.py
+mock_ha_server.py
+README.md
+setup_local_dev.sh
