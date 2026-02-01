@@ -54,43 +54,58 @@ class HomeAssistantClient:
     
     async def ensure_switch_exists(self, switch: SwitchConfig) -> bool:
         """
-        Ensure input_boolean helper exists for the switch
+        Check if input_boolean helper exists for the switch
+        
+        Note: This method does NOT create Input Boolean helpers automatically,
+        because the REST API doesn't support it. Users must create them manually
+        through the Home Assistant UI or configuration.yaml.
         
         Args:
             switch: Switch configuration
             
         Returns:
-            True if switch exists or was created
+            True if switch exists, False otherwise
         """
         entity_id = self._get_entity_id(switch.id)
         
         try:
             # Check if entity exists
             await self._make_request("GET", f"states/{entity_id}")
-            logger.debug(f"Switch {entity_id} already exists")
+            logger.info(f"✅ Switch {entity_id} found")
             return True
         except Exception:
-            # Entity doesn't exist, create it
-            logger.info(f"Creating input_boolean for switch {switch.id}")
-            
-            try:
-                # Create input_boolean via service call
-                # The object_id determines the entity_id: input_boolean.{object_id}
-                await self._make_request(
-                    "POST",
-                    "services/input_boolean/create",
-                    json_data={
-                        "object_id": f"webhook_{switch.id}",
-                        "name": switch.name,
-                        "icon": switch.icon
-                    }
-                )
-                
-                logger.info(f"Successfully created switch {entity_id}")
-                return True
-            except Exception as e:
-                logger.error(f"Failed to create switch {switch.id}: {e}")
-                return False
+            # Entity doesn't exist - show helpful message
+            logger.warning(
+                f"\n"
+                f"{'='*60}\n"
+                f"⚠️  Input Boolean '{entity_id}' NOT FOUND!\n"
+                f"{'='*60}\n"
+                f"\n"
+                f"Please create it manually in Home Assistant:\n"
+                f"\n"
+                f"Option 1: Via UI (Recommended)\n"
+                f"  1. Go to Settings → Devices & Services → Helpers\n"
+                f"  2. Click '+ CREATE HELPER' → Toggle\n"
+                f"  3. Name: {switch.name}\n"
+                f"  4. Icon: {switch.icon}\n"
+                f"  5. IMPORTANT: Object ID must be: webhook_{switch.id}\n"
+                f"     (This creates entity: {entity_id})\n"
+                f"  6. Click CREATE\n"
+                f"  7. Restart this addon\n"
+                f"\n"
+                f"Option 2: Via configuration.yaml\n"
+                f"  Add to your configuration.yaml:\n"
+                f"  \n"
+                f"  input_boolean:\n"
+                f"    webhook_{switch.id}:\n"
+                f"      name: {switch.name}\n"
+                f"      icon: {switch.icon}\n"
+                f"  \n"
+                f"  Then restart Home Assistant.\n"
+                f"\n"
+                f"{'='*60}\n"
+            )
+            return False
     
     async def get_state(self, switch_id: str) -> dict:
         """

@@ -1,6 +1,6 @@
 name: "Incoming Webhook"
 description: "Secure webhook API for controlling virtual switches via JWT-authenticated requests"
-version: "1.0.2"
+version: "1.0.3"
 slug: "incoming_webhook"
 init: false
 arch:
@@ -20,7 +20,13 @@ options:
   port: 8099
   log_level: "info"
   switches:
-    - id: "example_switch"
+    # IMPORTANT: You MUST manually create Input Boolean helpers in Home Assistant!
+    # See docs/setup_helpers.md for detailed setup instructions.
+    # 
+    # Entity ID format: input_boolean.webhook_{id}
+    # Example: if id="test_switch", create helper with Object ID: webhook_test_switch
+    # 
+    - id: "example_switch"            # Entity ID will be: input_boolean.webhook_example_switch
       name: "Example Switch"
       icon: "mdi:light-switch"
 schema:
