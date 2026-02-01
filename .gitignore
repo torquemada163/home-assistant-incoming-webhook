@@ -65,3 +65,4 @@ generate_token.py
 mock_ha_server.py
 README.md
 setup_local_dev.sh
+DEPLOY_QUICK.md
