@@ -75,19 +75,17 @@ class HomeAssistantClient:
             
             try:
                 # Create input_boolean via service call
+                # The object_id determines the entity_id: input_boolean.{object_id}
                 await self._make_request(
                     "POST",
                     "services/input_boolean/create",
                     json_data={
+                        "object_id": f"webhook_{switch.id}",
                         "name": switch.name,
-                        "icon": switch.icon,
-                        "initial": False
+                        "icon": switch.icon
                     }
                 )
                 
-                # Update entity ID to match our naming convention
-                # Note: This is a simplified approach. In production, you might
-                # need to use Home Assistant's entity registry API
                 logger.info(f"Successfully created switch {entity_id}")
                 return True
             except Exception as e:
