@@ -1,6 +1,6 @@
 name: "Incoming Webhook"
-description: "Secure webhook API for controlling virtual switches from external systems"
-version: "1.0.0"
+description: "Secure webhook API for controlling virtual switches via JWT-authenticated requests"
+version: "1.0.1"
 slug: "incoming_webhook"
 init: false
 arch:
