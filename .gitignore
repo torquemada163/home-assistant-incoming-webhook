@@ -57,7 +57,7 @@ secrets.yaml
 
 # TEMP
 .agent/
-CONCEPT.md
+internal_docs/
 RELEASE_NOTES_*
 test_webhook.sh
 
