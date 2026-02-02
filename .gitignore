@@ -57,13 +57,8 @@ secrets.yaml
 
 # TEMP
 .agent/
-docs/
-CHANGELOG.md
 CONCEPT.md
-fix_python_version.sh
-generate_token.py
-mock_ha_server.py
-README.md
-setup_local_dev.sh
-DEPLOY_QUICK.md
 RELEASE_NOTES_*
+test_webhook.sh
+
+
